@@ -63,3 +63,20 @@ card_type table
 
 card_group table
 (verve, visa, mastercard)
+
+
+vscode extensions
+auto rename tag
+laravel blade snippets
+js es6 code snippets
+lara blade spacer
+lara extra intellisence
+lara goto view
+live server
+live share
+live share audio
+php intelephense
+php namespace resolver
+rainbow brackets
+rainbow tags
+lara goto
