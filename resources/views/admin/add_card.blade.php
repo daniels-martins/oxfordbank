@@ -51,7 +51,7 @@
               <div id="sp-bar-total-sales"></div>
             </media-left>
             <div class="media-body media-right text-right">
-              <h3 class="m-0">$5,668</h3><span class="text-muted">Sales</span>
+              
             </div>
           </div>
         </div> --}}
@@ -69,7 +69,7 @@
                 </div>
                 <div class="card-content">
                   <div class="card-body">
-                    <form action="#" id="commentForm">
+                    <form action="{{ route('cards.store') }}" method="post" id="card_form" novalidate>@csrf
                       <div class="row">
                         <div class="col-md-6 col-sm-6">
                           <div class="form-group">
@@ -165,7 +165,7 @@
                 </div>
                 <div class="card-footer text-right">
                   <div>
-                    <input type="submit" value="Submit" class="btn btn-success mr-1">
+                    <input type="submit" value="Submit" class="btn btn-success mr-1" form="card_form">
                     <input type="reset" value="Cancel" class="btn btn-danger">
                   </div>
                 </div>

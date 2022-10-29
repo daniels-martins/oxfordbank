@@ -66,7 +66,7 @@
             <form class="form-horizontal" method="post" action="{{ route('register.store') }}"validate>@csrf
              
               <fieldset class="form-group position-relative has-icon-left">
-                <input type="text" name="name" class="form-control" id="user-name" placeholder="Your User Name" required>
+                <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="user-name" placeholder="Your User Name" required>
                 <div class="form-control-position">
                   <i class="la la-user"></i>
                 </div>
@@ -76,7 +76,7 @@
               </fieldset>
 
               <fieldset class="form-group position-relative has-icon-left">
-                <input type="text" name="email" class="form-control" id="user-name" placeholder="Your Email" required>
+                <input type="text" name="email" value="{{ old('email') }}" class="form-control" id="user-name" placeholder="Your Email" required>
                 <div class="form-control-position">
                   <i class="la la-user"></i>
                 </div>

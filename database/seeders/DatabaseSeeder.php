@@ -14,12 +14,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->seedDB();
+    }
+
+
+
+
+    public function seedDB()
+    {
+         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(CardSeeder::class);
+
+        $this->call(UserSeeder::class); //for testing
+        $this->call(CardKindSeeder::class); //defaults
+        $this->call(CardTypeSeeder::class);//defaults
+        $this->call(CardGroupSeeder::class);//defaults
+        $this->call(AzaTypeSeeder::class);//defaults
+        $this->call(CardSeeder::class); //specific to first user
     }
 }

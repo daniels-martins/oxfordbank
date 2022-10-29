@@ -1,3 +1,8 @@
+{{-- {{
+dd(auth()->user()->azas()->first())
+
+}} --}}
+
 @extends('admin.layouts.app')
 @section('title', 'Home')
 @section('page_css')
@@ -23,7 +28,8 @@
 @endsection
 
 @section('custom_css')
-{{-- <link rel="stylesheet" type="text/css" href="/admin_assets/assets/css/"> --}}
+{{--
+<link rel="stylesheet" type="text/css" href="/admin_assets/assets/css/"> --}}
 @endsection
 
 
@@ -45,18 +51,23 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-9 text-left">
-                                            <h3 class="mb-0 text-white">Welcome back <b>{{ ucfirst(auth()->user()->name)
-                                                    }}!</b> </h3>
-                                            <p class="text-white">Account Number: 239584549</p>
-                                            <h4 class="danger mt-1 text-bold-500">Account Dashboard</h4>
+                                            <div class="mb-0 text-white d-flex justify-content-between">
+                                                <i class="la la-hand-paper-o text-success" style="font-size:4rem;"></i>
+                                                <span class="h3 mt-2 mr-2 text-white">{{ ucfirst(auth()->user()->name) }}!</h1>
+
+                                            </div>
+                                            <p class="text-white">
+                                                Account Number: {{ auth()->user()->azas->first()->num ?? 'none' }}
+                                                {{-- {{ auth()->user()->cards->first()->cc_num ?? '' }} --}}
+                                            </p>
                                         </div>
                                         <div class="col-3">
                                             {{-- necessary evil --}}
                                             <div class="float-right ">
                                                 <canvas id="euro-chart" class="height-100 d-none"></canvas>
                                                 <img class="rounded-circle"
-                                                    src="/admin_assets/app-assets/images/icons/female.png" alt="user_icon"
-                                                    width="75">
+                                                    src="/admin_assets/app-assets/images/icons/female.png"
+                                                    alt="user_icon" width="75">
 
                                             </div>
                                         </div>
@@ -80,8 +91,8 @@
                                             <div class="float-right">
                                                 <canvas id="gold-chart" class="height-75 d-none"></canvas>
                                                 <img class="rounded-circle"
-                                                    src="/admin_assets/app-assets/images/icons/credit.png" alt="user_icon"
-                                                    width="75">
+                                                    src="/admin_assets/app-assets/images/icons/credit.png"
+                                                    alt="user_icon" width="75">
                                             </div>
                                         </div>
                                     </div>
@@ -103,8 +114,8 @@
                                             <div class="float-right">
                                                 <canvas id="silver-chart" class="height-75 d-none"></canvas>
                                                 <img class="rounded-circle"
-                                                src="/admin_assets/app-assets/images/icons/credit2.png" alt="user_icon"
-                                                width="75">
+                                                    src="/admin_assets/app-assets/images/icons/credit2.png"
+                                                    alt="user_icon" width="75">
                                             </div>
                                         </div>
                                     </div>
@@ -127,9 +138,9 @@
                                             <div class="float-right">
                                                 <canvas id="bitcoin-chart" class="height-75 d-none"></canvas>
                                                 <img class="rounded-circle"
-                                                src="/admin_assets/app-assets/images/icons/debit2.png" alt="user_icon"
-                                                width="75">
-                                                
+                                                    src="/admin_assets/app-assets/images/icons/debit2.png"
+                                                    alt="user_icon" width="75">
+
                                             </div>
                                         </div>
                                     </div>
@@ -372,7 +383,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- @include('admin.partials.add_card_comp') --}}
+                {{-- @include('admin.partials.cards.create_comp') --}}
             </section>
 
         </div>
@@ -382,31 +393,31 @@
 @endsection
 
 @section('page_js')
- <!-- BEGIN: Vendor JS-->
- <script src="/admin_assets/app-assets/vendors/js/vendors.min.js"></script>
- <!-- BEGIN Vendor JS-->
+<!-- BEGIN: Vendor JS-->
+<script src="/admin_assets/app-assets/vendors/js/vendors.min.js"></script>
+<!-- BEGIN Vendor JS-->
 
- <!-- BEGIN: Page Vendor JS-->
- <script src="/admin_assets/app-assets/vendors/js/ui/jquery.sticky.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/charts/chart.min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/charts/chartist.min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/forms/extended/card/jquery.card.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/extensions/moment.min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/extensions/underscore-min.js"></script>
- <script src="/admin_assets/app-assets/vendors/js/extensions/clndr.min.js"></script>
- <!-- END: Page Vendor JS-->
+<!-- BEGIN: Page Vendor JS-->
+<script src="/admin_assets/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/charts/chart.min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/charts/chartist.min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/forms/extended/card/jquery.card.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/extensions/moment.min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/extensions/underscore-min.js"></script>
+<script src="/admin_assets/app-assets/vendors/js/extensions/clndr.min.js"></script>
+<!-- END: Page Vendor JS-->
 
- <!-- BEGIN: Theme JS-->
- <script src="/admin_assets/app-assets/js/core/app-menu.min.js"></script>
- <script src="/admin_assets/app-assets/js/core/app.min.js"></script>
- <script src="/admin_assets/app-assets/js/scripts/customizer.min.js"></script>
- <script src="/admin_assets/app-assets/js/scripts/footer.min.js"></script>
- <!-- END: Theme JS-->
+<!-- BEGIN: Theme JS-->
+<script src="/admin_assets/app-assets/js/core/app-menu.min.js"></script>
+<script src="/admin_assets/app-assets/js/core/app.min.js"></script>
+<script src="/admin_assets/app-assets/js/scripts/customizer.min.js"></script>
+<script src="/admin_assets/app-assets/js/scripts/footer.min.js"></script>
+<!-- END: Theme JS-->
 
- <!-- BEGIN: Page JS-->
- <script src="/admin_assets/app-assets/js/scripts/ui/breadcrumbs-with-stats.min.js"></script>
- <script src="/admin_assets/app-assets/js/scripts/pages/dashboard-bank.min.js"></script>
- <!-- END: Page JS-->
- @endsection
+<!-- BEGIN: Page JS-->
+<script src="/admin_assets/app-assets/js/scripts/ui/breadcrumbs-with-stats.min.js"></script>
+<script src="/admin_assets/app-assets/js/scripts/pages/dashboard-bank.min.js"></script>
+<!-- END: Page JS-->
+@endsection

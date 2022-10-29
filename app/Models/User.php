@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -43,12 +45,26 @@ class User extends Authenticatable
     ];
 
 
-
-
     // relationships
 
     public function cards()
     {
         return $this->hasMany(Card::class);
+    }
+    
+    public function azas()
+    {
+        return $this->hasMany(Aza::class);
+    }
+    
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+        // return $this->hasOne(Profile::class, 'email', 'email');
+    }
+    
+    public function trx()
+    {
+        return $this->hasMany(Trx::class);
     }
 }
