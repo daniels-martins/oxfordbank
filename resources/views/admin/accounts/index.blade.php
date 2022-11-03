@@ -37,9 +37,9 @@
         <div class="row breadcrumbs-top">
           <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a>
               </li>
-              <li class="breadcrumb-item"><a href="#">Account</a>
+              <li class="breadcrumb-item"><a href="{{ route('accounts.index') }}">Accounts</a>
               </li>
               <li class="breadcrumb-item active">All Accounts
               </li>
@@ -146,7 +146,7 @@
                           </div>
                         </td>
 
-                        <td class="d-flex justify-content-around">
+                        <td class="d-flex">
                           <div>
                             <a title="Edit" href="{{ route('accounts.edit', $account->id) }}">
                               <i class="la la-pencil-square success"></i>
@@ -155,7 +155,7 @@
 
                           <form class="action" method="post" action="{{ route('accounts.destroy', $account->id ) }}">
                             @csrf @method('delete')
-                            <button class="border-0 bg-transparent" title="Edit" type="submit"><i
+                            <button class="border-0 bg-transparent" title="Delete" type="submit"><i
                                 class="la la-trash danger"></i></button>
                           </form>
                         </td>

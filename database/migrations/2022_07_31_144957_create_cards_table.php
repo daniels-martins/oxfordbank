@@ -19,13 +19,20 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('cc_num');            
+            $table->string('card_num');   
+            $table->string('pan', 10)->nullable();
+            
+            $table->string('pin', 4)->default('0000');
+            $table->string('cvv', 4)->default('111');
+            $table->string('expiry', 5);
+            $table->dateTime('expiry_timestamp');
+
+            $table->boolean('status')->default(1);
             
             // foreign keys
             $table->foreignIdFor(CardKind::class);
             $table->foreignIdFor(CardType::class);
             $table->foreignIdFor(CardGroup::class);
-
             $table->foreignIdFor(User::class);
 
             $table->timestamps();

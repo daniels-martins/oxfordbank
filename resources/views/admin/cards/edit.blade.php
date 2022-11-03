@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Add Account')
+@section('title', 'Modify Card ')
 @section('page_css')
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="/admin_assets/app-assets/vendors/css/vendors.min.css">
@@ -43,15 +43,15 @@
   <div class="content-wrapper">
     <div class="content-header row">
       <div class="content-header-left col-md-6 col-12 mb-2">
-        <h3 class="content-header-title">New Account</h3>
+        <h3 class="content-header-title">New card</h3>
         <div class="row breadcrumbs-top">
           <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a>
               </li>
-              <li class="breadcrumb-item"><a href="{{ route('accounts.index') }}">Accounts</a>
+              <li class="breadcrumb-item"><a href="{{ route('cards.index') }}">Cards</a>
               </li>
-              <li class="breadcrumb-item active">Add New Account
+              <li class="breadcrumb-item active">Modify Card
               </li>
             </ol>
           </div>
@@ -76,67 +76,37 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title">
-                  Add New Account
+                  Modify Card
                 </h4>
               </div>
               <div class="card-content collapse show">
                 <div class="card-body">
-                  <form action="{{ route('accounts.store') }}" method="post"
-                    class="steps-validation wizard-notification wizard-info">
+                  <form action="{{ route('cards.update', $card->id) }}" method="post"
+                    class="steps-validation wizard-notification wizard-info">@csrf @method('patch')
                     @csrf
                     <!----   Step 2 ------>
                     <h6>
-                      Account Type
+                      Card Status
                     </h6>
                     <fieldset>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group account-wrapper">
-                            <label>Account Type</label>
-                            <div class="row skin skin-flat">
-                              <div class="col-md-12">
-                                @foreach ($aza_types as $accType)
-                                <div class="form-check">
-                                  <input id="{{ $accType->name }}" name="aza_type" type="radio" value="{{ $accType->id }}">
-                                  <label for="{{ $accType->name }}" class="text-capitalize">
-                                    {{ $accType->name }}
-                                  </label>
-                                </div>
-                                @endforeach
-                                
-                                @error('aza_type')
-                                <div class="col-12 error"><em class="font-weight-bold">Oops! {{ $message }} </em> </div>
-                                @enderror
-                              </div>
+                            <label class="h3">
+                              Suspicious Activity on your Card account? <br>
+                            </label>
+                            <div class="">
+                              <p>Turn off your {{ ucfirst($card->getType()) }} Card  {{ $card->hiddenMode() }} for Debit Transactions</p>
+                              <div class="col-md-9">
+                                <select name="status" id="" class="form-control">
+                                  <option value="">--Switch Card Account--</option>
 
+                                  <option value="1">Active</option>
+                                  <option value="0">Inactive</option>
+                                </select>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <!-- <div class="form-group account-wrapper">
-                            <label>
-                              Mode of Operation
-                            </label>
-                            <div class="row skin skin-flat">
-                              <div class="col-md-12">
-                                <div class="form-check">
-                                  <input id="mode1" name="mode" type="radio" value="self" checked>
-                                  <label for="mode1">
-                                    Self Only
-                                  </label>
-                                </div>
-                                <div class="form-check">
-                                  <input id="mode2" name="mode" type="radio" value="self_and_nominee">
-                                  <label for="mode2">
-                                    Either or Survivor
-                                  </label>
-                                </div>
-                                
-                              </div>
-                            </div>
-                          </div> -->
                         </div>
                       </div>
                     </fieldset>

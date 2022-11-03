@@ -29,11 +29,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(UserSeeder::class); //for testing
+        // prerequisites
         $this->call(CardKindSeeder::class); //defaults
         $this->call(CardTypeSeeder::class);//defaults
         $this->call(CardGroupSeeder::class);//defaults
         $this->call(AzaTypeSeeder::class);//defaults
+
+        // human data
+        $this->call(UserSeeder::class); //for testing
         $this->call(CardSeeder::class); //specific to first user
     }
 }

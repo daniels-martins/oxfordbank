@@ -27,7 +27,7 @@
 
 @section('content')
 <!-- BEGIN: Content-->
-<div class="app-content content">
+<div class="app-content content ubuntu-font">
   <div class="content-overlay"></div>
   <div class="content-wrapper">
     <div class="content-header row">
@@ -51,84 +51,95 @@
       <!-- Form wizard with number tabs section start -->
       <section id="add-payment">
         <div class="row">
-          <div class="col-4 center_div" >
+          <div class="col-sm-12 col-md-6 col-lg-4 center_div" >
             <div class="card center">
               <div class="card-header">
                 <h4 class="card-title">
-                  Add New Payment
+                  Make a New Payment
                 </h4>
               </div>
               <div class="card-content">
                 <div class="card-body">
-                  <form action="#" id="commentForm">
+                  <form action="{{ route('payments.store') }}" id="commentForm" class="" novalidate method="post">
+                    @csrf 
                     <div class="row">
                       
-                    <div class="col-sm-8">
+                    <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
-                          <label for="trans-type">
+                          <label for="source_aza">
                             Account From
-                            <span class="danger">
-                              *
-                            </span>
+                            <span class="danger">*</span> <span class="primary">(Source Account)</span>
                           </label>
                           <div class="form-group">
-                            <select class="form-control" id="trans-type" name="trans-type">
+                            <select class="form-control" id="source_aza" name="source_aza">
                             <option value="Deposit">
                                 ---
                               </option>
+                              @foreach ($accounts as $account)
+                              <option value="{{ $account->num }}">
+                                {{ $account->getType() . " ($account->num)" }}
+                              </option>
+                              @endforeach
+                            </select>
+
+                            {{-- if there is a need to deal with transaction type --}}
+                            {{-- <select class="form-control" id="trans-type" name="trans-type">
                               <option value="Deposit">
                                 Savings (0162815192)
                               </option>
                               <option value="Withdraw">
                               Checking (2014360545)
                               </option>
-                            </select>
+                            </select> --}}
                           </div>
                         </div>
                       </div>
 
-                      <div class="col-md-8 col-sm-8">
+                      <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
                           <label for="amount">
-                            Amount
+                            Amount ($)
                             <span class="danger">
                               *
                             </span>
                           </label>
-                          <input class="form-control" id="amount" name="amount" placeholder="Enter Amount" type="number" required>
+                          <input class="form-control" id="amount" name="amount" placeholder="Enter Amount" min="100" type="number" >
                         </div>
                       </div>
                     </div>
                     <div class="row">
 
-                      <div class="col-md-8 col-sm-8">
+                      <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
-                          <label for="trans-to-ac">
+                          <label for="destination_aza">
                             Transfer to A/c
                           </label>
-                          <input class="form-control" id="trans-to-ac" name="trans-ac" placeholder="Transfer to Account" type="number">
+                          <span class="danger"> * </span>
+                          <span class="primary"> (Destination Account) </span>
+                          <input maxlength=10 minlength="10" class="form-control" id="destination_aza"
+                             name="destination_aza" placeholder="Transfer to Account" type="number">
                         </div>
                       </div>
-                      <div class="col-md-8 col-sm-8">
+                      <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
-                          <label for="bank-name">
-                            Bank Name
-                          </label>
-                          <input class="form-control" id="bank-name" name="bank-name" placeholder="Bank Name" type="text">
+                          
+                          <label for="destination_bank">Bank Name</label>
+                          <span class="primary"> (Destination Bank Name) </span>
+                          <input class="form-control" id="destination_bank" name="destination_bank" placeholder="Bank Name" type="text">
                         </div>
                       </div>
 
-                      <div class="col-md-8 col-sm-8">
+                      <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
-                          <label for="bank-name">
+                          <label for="beneficiary">
                             Beneficiary Name
                           </label>
-                          <input class="form-control" id="bank-name" name="bank-name" placeholder="Bank Name" type="text">
+                          <input class="form-control" id="beneficiary" name="beneficiary" placeholder="Bank Name" type="text">
                         </div>
                       </div>
 
 
-                      <div class="col-md-8 col-sm-8">
+                      <div class="col-sm-12 col-md-11 col-lg-10">
                         <div class="form-group">
                           <label for="remarks">
                             Remarks
@@ -137,12 +148,15 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="card-footer text-right">
+                      <input type="submit" value="Submit" class="btn btn-success mr-1">
+                      <input type="reset" value="Cancel" class="btn btn-danger">
+                    </div>
+
                   </form>
                 </div>
-                <div class="card-footer text-right">
-                  <input type="submit" value="Submit" class="btn btn-success mr-1">
-                  <input type="reset" value="Cancel" class="btn btn-danger">
-                </div>
+               
               </div>
             </div>
           </div>

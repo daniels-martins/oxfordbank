@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Card;
+use App\Models\CardType;
 use Illuminate\Http\Request;
+use Database\Seeders\CardSeeder;
 
 class CardController extends Controller
 {
@@ -13,7 +16,9 @@ class CardController extends Controller
      */
     public function index()
     {
-            return view('admin.cards.index');
+        $cards = auth()->user()->cards;
+        // dd($cards);
+        return view('admin.cards.index', compact('cards'));
     }
 
     /**
@@ -23,7 +28,7 @@ class CardController extends Controller
      */
     public function create()
     {
-        return view('admin.add_card');
+        return view('admin.cards.create');
     }
 
     /**
@@ -34,7 +39,19 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        return 'fn';
+        $card_data = $request->except('_token', '_method');
+        // dd($card_data);
+        // lets Generate this new Card
+
+        
+        // step4: Generate Card
+        // tryig to use a public non-static method from another class and it worked
+        $newCardSeeder = new CardSeeder();
+
+        $new_card = $newCardSeeder->generateCard($card_data); 
+        return $new_card
+            ?  back()->with('success', 'Card Created Successfully')
+            :  back()->with('danger', 'Oops! Please Try Again..');
     }
 
     /**
@@ -54,9 +71,10 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Card $card)
     {
-        //
+        return view('admin.cards.edit', compact('card'));
+
     }
 
     /**
@@ -66,9 +84,13 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Card $card)
     {
-        //
+         // we're only allowed to edit d status of an account,hence we extract only the status
+         if ($updated = $card->update(['status' => $request->status ?? $card->status]))
+         return ($card->wasChanged('status'))
+             ? back()->with('success', "Account Updated Successfully")
+             : back()->with('warning', 'Oops! Something went wrong. Please Try again');
     }
 
     /**
@@ -77,8 +99,20 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Card $card)
     {
-        //
+        // dd($card, CardType::find($card->card_type_id)->name);
+        // get Card type
+        $cardTypeName = ucfirst(CardType::find($card->card_type_id)->name);
+        if ($card->balance <= 0) {
+            return ($deleted  = $card->delete())
+                ? back()->with('success', "$cardTypeName card deleted Successfully")
+                : back()->with('warning', 'Oops! Something went wrong. Please Try again');
+        } else {
+            back()->with('warning', 'Oops! Account Removal Failed : Account has funds in it');
+        }
     }
+
+
+   
 }

@@ -21,7 +21,7 @@ email
 gender
 marital_status
 
-
+//unnecessary
 kyc table (futures)
 annual_income
 income_tax_num

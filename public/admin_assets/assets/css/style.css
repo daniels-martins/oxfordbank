@@ -63,4 +63,13 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	background-color: #6cc982;
 	border-color: #c3e6cb;
   }
-  
+
+  .toast-alert-danger {
+	color: #fff;
+	background-color: #fc0022b3;
+	border-color: #fc0021;
+  }
+
+  body, div, p, span, .form-control, *, .card*, .row*{
+	font-family: sans-serif !important;
+  }

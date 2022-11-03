@@ -27,6 +27,6 @@ class Aza extends Model
 
     public function getType()
     {
-        return AzaType::find($this->aza_type_id)->name;
+        return ucfirst(AzaType::find($this->aza_type_id)->name);
     }
 }

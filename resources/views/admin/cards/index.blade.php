@@ -37,9 +37,9 @@
         <div class="row breadcrumbs-top">
           <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a>
               </li>
-              <li class="breadcrumb-item"><a href="#">Cards</a>
+              <li class="breadcrumb-item"><a href="{{ route('cards.index') }}">Accounts</a>
               </li>
               <li class="breadcrumb-item active">Cards List
               </li>
@@ -83,9 +83,14 @@
                               <input type="text" placeholder="Card Number" name="card-no" class="form-control">
                             </div>
 
-                            <label>Credit Limit </label>
+                            {{-- <label>Credit Limit </label>
                             <div class="form-group">
                               <input type="text" placeholder="Credit Limit" name="limit" class="form-control">
+                            </div> --}}
+
+                            <label>Card Balance </label>
+                            <div class="form-group">
+                              <input type="text" placeholder="Credit Limit" name="limit" class="form-control" />
                             </div>
 
                             <label for="status">Card Status
@@ -115,65 +120,70 @@
                   <table id="active-accounts" class="table alt-pagination card-wrapper">
                     <thead>
                       <tr>
-                        <th class="border-top-0"></th>
+                        <th class="border-top-0">PAN</th>
                         <th class="border-top-0">Card No.</th>
+                        <th class="border-top-0">CVV</th>
                         <th class="border-top-0">Holder Name</th>
                         <th class="border-top-0">Expiry Date</th>
-                        <th class="border-top-0">Credit Limit</th>
+                        {{-- <th class="border-top-0">Credit Limit</th> --}}
+                        <th class="border-top-0">Credit Balance</th>
                         <th class="border-top-0">Status</th>
                         <th class="border-top-0">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="align-middle">
-                          <div class="card-icon"><i class="la la-credit-card text-light"></i></div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="card-no">xxxx-xxxx-xxxx-2365</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="holder-name">Zenalass wall</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="exp-date">01/23</div>
-                        </td>
-                        <td class="align-middle limit">5,000</td>
-                        <td class="align-middle">
-                          <div class="status badge badge-success badge-pill badge-sm">Active</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="action">
-                            <a href="bank-add-card.html"><i class="la la-pencil-square success"></i></a>
-                            <a href="#"><i class="la la-trash danger"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="align-middle">
-                          <div class="card-icon"><i class="la la-credit-card text-light"></i></div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="card-no">xxxx-xxxx-xxxx-2464</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="holder-name">Colinlass Welch</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="exp-date">06/20</div>
-                        </td>
-                        <td class="align-middle limit">2,000</td>
-                        <td class="align-middle">
-                          <div class="status badge badge-danger badge-pill badge-sm">Deactived</div>
-                        </td>
-                        <td class="align-middle">
-                          <div class="action">
-                            <a href="bank-add-card.html"><i class="la la-pencil-square success"></i></a>
-                            <a href="#"><i class="la la-trash danger"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
+                      @foreach ($cards as $card)
+                          <tr>
+                            <td class="align-middle">
+                              <div class="card-icon">{{ $card->pan ?? 'Debit' }}</div>
+                            </td>
+                            <td class="align-middle">
+                              <div class="card-no"><i class="la la-credit-card text-light"></i>
+                                {{ $card->card_num }}
+                              </div>
+                            </td>
+
+                            <td class="align-middle">
+                              <div class="card-no">{{ $card->cvv }}</div>
+                            </td>
+
+
+                            <td class="align-middle">
+                              <div class="holder-name">{{ auth()->user()->profile->getFullName() }}</div>
+                            </td>
+                            <td class="align-middle">
+                              <div class="exp-date">{{ $card->expiry }}</div>
+                            </td>
+                            {{-- <td class="align-middle limit">{{ $card->balance ?? 1000 }}</td> --}}
+                            <td class="align-middle">
+                              <div class="ac-balance">
+                                <span>$</span> {{ $card->balance > 0 ? $card->balance : '0.00' }}
+                              </div>
+                            </td>
+
+                            <td class="align-middle">
+                              <div class="ac-status badge 
+                                @if ($card->status) badge-success @else badge-danger @endif 
+                                badge-pill badge-sm">
+                                @if ($card->status) Active @else Deactivated @endif
+                              </div>
+                            </td>
+
+                            <td class="d-flex">
+                              <div class="action">
+                                <a href="{{ route('cards.edit', $card->id) }}"><i class="la la-pencil-square success"></i></a>
+                              </div>
+                              <form class="" method="post" action="{{ route('cards.destroy', $card->id) }}">@csrf @method('delete')
+                                <button class="border-0 bg-transparent" title="Delete" type="submit"><i
+                                  class="la la-trash danger"></i></button>
+                              </form>
+                            </td>
+
+                          </tr>
+                      @endforeach
+                     
+                      
+                      {{-- <tr>
                         <td class="align-middle">
                           <div class="card-icon"><i class="la la-credit-card text-light"></i></div>
                         </td>
@@ -196,7 +206,7 @@
                             <a href="#"><i class="la la-trash danger"></i></a>
                           </div>
                         </td>
-                      </tr>
+                      </tr> --}}
                     </tbody>
                   </table>
                 </div>

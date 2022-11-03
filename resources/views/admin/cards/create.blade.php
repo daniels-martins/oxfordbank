@@ -60,7 +60,7 @@
         <!-- Form wizard with number tabs section start -->
         <section id="add-card">
           <div class="row">
-            <div class="col-12">
+            <div class="offset-4 col-4">
               <div class="card">
                 <div class="card-header">
                   <h4 class="card-title">
@@ -71,25 +71,19 @@
                   <div class="card-body">
                     <form action="{{ route('cards.store') }}" method="post" id="card_form" novalidate>@csrf
                       <div class="row">
-                        <div class="col-md-6 col-sm-6">
+
+                        <div class="col-md-12 col-sm-12">
                           <div class="form-group">
-                            <label for="holdername">
-                              Card Holder Name
-                              <span class="danger">
-                                *
-                              </span>
+                            <label for="type">
+                              Card Type
                             </label>
-                            <input class="form-control" id="holdername" name="hname" placeholder="Account Holder Name" type="text" required>
+                            <select class="c-select form-control" id="type" name="card-type">
+                              <option value="debit">Debit</option>
+                              <option value="credit">Credit</option>
+                            </select>
                           </div>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                              <label for="ac-no">
-                                A/c No.
-                              </label>
-                              <input type="number" class="form-control" id="ac-no" name="ac-no" placeholder="Account No.">
-                            </div>
-                          </div>
+
                       </div>
                       <div class="row">
                         <div class="col-md-6 col-sm-6">
@@ -97,13 +91,13 @@
                               <label for="type">
                                 Card (Kind)
                               </label>
-                              <select class="c-select form-control" id="type" name="card-type">
+                              <select class="c-select form-control" id="type" name="card-kind">
                                 {{-- <option value="Debit">Debit</option>
                                 <option value="Credit">Credit</option>
                                 <option value="Gold">Gold</option>
                                 <option value="Platinum">Platinum</option> --}}
-                                <option value="Debit">Virtual</option>
-                                <option value="Credit">Physical</option>
+                                <option value="virtual">Virtual</option>
+                                <option value="physical">Physical</option>
                               </select>
                             </div>
                           </div>
@@ -114,11 +108,11 @@
                                 *
                               </span>
                             </label>
-                            <select class="c-select form-control" id="status" name="card-status">
-                              <option value="Active">
+                            <select class="c-select form-control" id="status" name="status">
+                              <option value="1">
                                 Active
                               </option>
-                              <option value="Deactived">
+                              <option value="0">
                                 Deactived
                               </option>
                               {{-- <option value="Delayed">
@@ -137,28 +131,30 @@
                             <label for="type">
                               Card Group
                             </label>
-                            <select class="c-select form-control" id="type" name="card-type">
+                            <select class="c-select form-control" id="type" name="card-group">
                               {{-- <option value="Debit">Debit</option>
                               <option value="Credit">Credit</option>
                               <option value="Gold">Gold</option>
                               <option value="Platinum">Platinum</option> --}}
-                              <option value="Debit">Visa</option>
-                              <option value="Credit">Master card</option>
+                              <option value="visa">Visa</option>
+                              <option value="master">Master card</option>
                             </select>
                           </div>
                         </div>
 
                         <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                              <label for="type">
-                                Card Type
-                              </label>
-                              <select class="c-select form-control" id="type" name="card-type">
-                                <option value="Debit">Debit</option>
-                                <option value="Credit">Credit</option>
-                              </select>
-                            </div>
+                          <div class="form-group">
+                            <label for="holdername">
+                              Card Holder Name
+                              <span class="danger">
+                                *
+                              </span>
+                            </label>
+                            <input disabled class="form-control cursor-not-allowed" id="holdername" name="CH_name" 
+                            placeholder="Account Holder Name" type="text" required value="{{ auth()->user()->profile->getFullName() }}">
                           </div>
+                        </div>
+
                       </div>
                     </form>
                   </div>

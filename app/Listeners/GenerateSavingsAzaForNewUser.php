@@ -2,12 +2,15 @@
 
 namespace App\Listeners;
 
+use stdClass;
 use App\Models\Profile;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\AzaController;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class GenerateProfileForNewUser
+class GenerateSavingsAzaForNewUser
 {
     /**
      * Create the event listener.
@@ -35,6 +38,9 @@ class GenerateProfileForNewUser
          * later he will fill out the rest from his profile page
          * 
          */
-        $event->user->profile()->create();
+        $req = new Request();
+        $req->azatype = 'savings';
+
+        (new AzaController())->store($req);
     }
 }
